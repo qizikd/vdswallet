@@ -24,13 +24,8 @@ func main() {
 	router.GET("/wallet/vds/balance", routerHandler.GetBalance)
 	//获取钱包交易记录
 	router.GET("/wallet/vds/txs", routerHandler.GetTransactions)
-	//获取指定地址接收的金额
-	router.GET("/wallet/vds/addressreceive", routerHandler.GetBtcAddressReceive)
-	//获取钱包所有地址接收的金额
-	router.GET("/wallet/vds/alladdressreceive", routerHandler.GetBtcAllAddressReceive)
 	//提币 余额归拢
 	router.POST("/wallet/vds/sendto", routerHandler.SendBtc)
 
 	router.Run(":" + *port)
 }
-

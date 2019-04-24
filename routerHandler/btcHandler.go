@@ -2,8 +2,6 @@ package routerHandler
 
 import (
 	"fmt"
-	"github.com/btcsuite/btcd/chaincfg"
-	"github.com/btcsuite/btcutil"
 	"github.com/gin-gonic/gin"
 	"github.com/golang/glog"
 	"github.com/qizikd/vdswallet/transfer"
@@ -53,14 +51,14 @@ func GetTransactions(c *gin.Context) {
 	start := c.Query("start")
 	end := c.PostForm("end")
 	_start, err := strconv.Atoi(start)
-	if err != nil{
+	if err != nil {
 		_start = 0
 	}
 	_end, err := strconv.Atoi(end)
-	if err != nil{
+	if err != nil {
 		_end = 100
 	}
-	result, err := transfer.ListWalletTransactions(_start,_end)
+	result, err := transfer.ListWalletTransactions(_start, _end)
 	if err != nil {
 		c.JSON(http.StatusOK, gin.H{
 			"code":      -1,
@@ -76,58 +74,10 @@ func GetTransactions(c *gin.Context) {
 	return
 }
 
-func GetBtcAddressReceive(c *gin.Context) {
-	address := c.Query("address")
-	var addr btcutil.Address
-	var err error
-	addr, err = btcutil.DecodeAddress(address, &chaincfg.MainNetParams)
-	if err != nil {
-		c.JSON(http.StatusOK, gin.H{
-			"code":      -1,
-			"msg":       "地址非法",
-			"errorinfo": fmt.Sprintf("地址非法(%s)", err.Error()),
-		})
-		return
-	}
-	balance, err := transfer.GetBtcAddressReceive(addr)
-	if err != nil {
-		c.JSON(http.StatusOK, gin.H{
-			"code":      -1,
-			"msg":       "获取余额失败",
-			"errorinfo": err.Error(),
-		})
-		return
-	}
-	c.JSON(http.StatusOK, gin.H{
-		"code": 0,
-		"data": gin.H{
-			"recv": balance,
-		},
-	})
-	return
-}
-
-func GetBtcAllAddressReceive(c *gin.Context) {
-	result, err := transfer.GetBtcAllAddressReceive()
-	if err != nil {
-		c.JSON(http.StatusOK, gin.H{
-			"code":      -1,
-			"msg":       "获取余额失败",
-			"errorinfo": err.Error(),
-		})
-		return
-	}
-	c.JSON(http.StatusOK, gin.H{
-		"code": 0,
-		"data": result,
-	})
-	return
-}
-
 func SendBtc(c *gin.Context) {
 	toaddress := c.PostForm("toaddress")
 	_amount := c.PostForm("amount")
-	amount, err := strconv.ParseFloat(_amount,64)
+	amount, err := strconv.ParseFloat(_amount, 64)
 	if err != nil {
 		c.JSON(http.StatusOK, gin.H{
 			"code":      -1,
@@ -164,4 +114,3 @@ func SendBtc(c *gin.Context) {
 	})
 	return
 }
-
