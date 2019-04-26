@@ -49,7 +49,7 @@ func GetBalance(c *gin.Context) {
 
 func GetTransactions(c *gin.Context) {
 	start := c.Query("start")
-	end := c.PostForm("end")
+	end := c.Query("end")
 	_start, err := strconv.Atoi(start)
 	if err != nil {
 		_start = 0
