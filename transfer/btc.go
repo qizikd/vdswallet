@@ -44,7 +44,7 @@ func GetWalletBalance() (balance float64, err error) {
 	return
 }
 
-func ListWalletTransactions(start int, end int) (txs *[]btcjson.ListTransactionsResult, err error) {
+func ListWalletTransactions(offset int, count int) (txs *[]btcjson.ListTransactionsResult, err error) {
 	client, err := rpc.DialHTTP(WalletHost, &rpc.AuthCfg{User: WalletRpcUser, PassWord: WalletRpcPwd})
 	if err != nil {
 		glog.Error("连接节点失败: ", err)
@@ -52,7 +52,7 @@ func ListWalletTransactions(start int, end int) (txs *[]btcjson.ListTransactions
 	}
 	defer client.Close()
 	//var amount float3
-	err = client.Call(&txs, "listtransactions", end, start)
+	err = client.Call(&txs, "listtransactions", count, offset)
 	if err != nil {
 		glog.Error(fmt.Sprintf("读取余额失败: %s", err.Error()))
 		return nil, errors.New("读取余额失败")

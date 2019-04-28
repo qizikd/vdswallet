@@ -48,17 +48,17 @@ func GetBalance(c *gin.Context) {
 }
 
 func GetTransactions(c *gin.Context) {
-	start := c.Query("start")
-	end := c.Query("end")
-	_start, err := strconv.Atoi(start)
+	offset := c.Query("offset")
+	count := c.Query("count")
+	_offset, err := strconv.Atoi(offset)
 	if err != nil {
-		_start = 0
+		_offset = 0
 	}
-	_end, err := strconv.Atoi(end)
+	_count, err := strconv.Atoi(count)
 	if err != nil {
-		_end = 100
+		_count = 100
 	}
-	result, err := transfer.ListWalletTransactions(_start, _end)
+	result, err := transfer.ListWalletTransactions(_offset, _count)
 	if err != nil {
 		c.JSON(http.StatusOK, gin.H{
 			"code":      -1,
