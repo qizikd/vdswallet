@@ -169,7 +169,7 @@ func DialContext(ctx context.Context, rawurl string) (*Client, error) {
 	}
 	switch u.Scheme {
 	case "http", "https":
-		return DialHTTP(rawurl,&AuthCfg{})
+		return DialHTTP(rawurl, &AuthCfg{})
 	case "ws", "wss":
 		return DialWebsocket(ctx, rawurl, "")
 	case "stdio":
@@ -255,7 +255,7 @@ func (c *Client) CallContext(ctx context.Context, result interface{}, method str
 	if err != nil {
 		return err
 	}
-	fmt.Println("SendJson:",msg)
+	fmt.Println("SendJson:", msg)
 	op := &requestOp{ids: []json.RawMessage{msg.ID}, resp: make(chan *jsonrpcMessage, 1)}
 
 	if c.isHTTP {
@@ -276,7 +276,7 @@ func (c *Client) CallContext(ctx context.Context, result interface{}, method str
 	case len(resp.Result) == 0:
 		return ErrNoResult
 	default:
-		fmt.Println("ReceJson:",string(resp.Result))
+		//fmt.Println("ReceJson:",string(resp.Result))
 		return json.Unmarshal(resp.Result, &result)
 	}
 }
