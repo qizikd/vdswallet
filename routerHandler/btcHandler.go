@@ -77,6 +77,7 @@ func GetTransactions(c *gin.Context) {
 func SendBtc(c *gin.Context) {
 	toaddress := c.PostForm("toaddress")
 	_amount := c.PostForm("amount")
+	fmt.Printf("toaddress:%s,amount:%s\n", toaddress, _amount)
 	amount, err := strconv.ParseFloat(_amount, 64)
 	if err != nil {
 		c.JSON(http.StatusOK, gin.H{
@@ -84,7 +85,7 @@ func SendBtc(c *gin.Context) {
 			"msg":       "金额非法",
 			"errorinfo": "金额非法",
 		})
-		glog.Error("金额非法")
+		glog.Error("金额非法", err.Error())
 		return
 	}
 	balance, _ := transfer.GetWalletBalance()
