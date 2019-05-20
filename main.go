@@ -11,9 +11,15 @@ import (
 func main() {
 	port := flag.String("port", "80", "Listen port")
 	pwd := flag.String("pwd", "123456", "wallet password")
+	wallethost := flag.String("wallethost", "http://127.0.0.1:8091/", "wallet host")
+	walletrpcuser := flag.String("walletrpcuser", "", "wallet rpc user")
+	walletrpcpwd := flag.String("walletrpcpwd", "", "wallet rpc password")
 	flag.Parse()
 
 	transfer.WalletPassWord = *pwd
+	transfer.WalletHost = *wallethost
+	transfer.WalletRpcUser = *walletrpcuser
+	transfer.WalletRpcPwd = *walletrpcpwd
 	router := gin.Default()
 	router.GET("/", func(c *gin.Context) {
 		c.String(http.StatusOK, "Hello, World!")

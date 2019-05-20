@@ -9,7 +9,7 @@ import (
 )
 
 var WalletPassWord = "123456"
-var WalletHost string = "http://47.244.57.162:13982"
+var WalletHost string = "http://127.0.0.1:13982"
 var WalletRpcUser string = "coninbkb"
 var WalletRpcPwd string = "coinbkb2019!"
 
