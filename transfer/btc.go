@@ -9,11 +9,12 @@ import (
 )
 
 var WalletPassWord = "123456"
-var WalletHost string = "http://127.0.0.1:13982"
-var WalletRpcUser string = "coninbkb"
-var WalletRpcPwd string = "coinbkb2019!"
+var WalletHost = "http://127.0.0.1:8332"
+var WalletRpcUser = "rpcuser"
+var WalletRpcPwd = "rpcpwd"
 
 func GetNewAddress() (address string, err error) {
+	fmt.Printf("WalletHost:%s,WalletRpcUser:%s,WalletRpcPwd:%s\n", WalletHost, WalletRpcUser, WalletRpcPwd)
 	client, err := rpc.DialHTTP(WalletHost, &rpc.AuthCfg{User: WalletRpcUser, PassWord: WalletRpcPwd})
 	if err != nil {
 		glog.Error("连接节点失败", err.Error())
