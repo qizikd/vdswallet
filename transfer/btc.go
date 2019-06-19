@@ -69,18 +69,18 @@ func SendBtc(toAddress string, amount float64) (txid string, err error) {
 	}
 	defer client.Close()
 	////先解锁钱包
-	//err = client.WalletPassphrase(WalletPassWord, 30)
+	//err = client.Call(&txid, "walletpassphrase", WalletPassWord, 30)
 	//if err != nil {
 	//	glog.Error("钱包解锁失败: ", err)
 	//	return "", errors.New("钱包解锁失败")
 	//}
+	////锁定钱包
+	//defer client.Call(&txid, "walletlock")
 	//发送交易
 	err = client.Call(&txid, "sendtoaddress", toAddress, amount)
 	if err != nil {
 		glog.Error(fmt.Sprintf("发送交易失败: %s", err.Error()))
 		return
 	}
-	//锁定钱包
-	//client.WalletLock()
 	return
 }
